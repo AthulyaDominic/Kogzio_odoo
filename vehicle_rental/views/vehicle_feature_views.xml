@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--List View-->
+    <record id="view_vehicle_feature_list" model="ir.ui.view">
+        <field name="name">vehicle.features.list</field>
+        <field name="model">vehicle.feature</field>
+        <field name="arch" type="xml">
+            <list sample="1" string="Vehicle Features">
+                <field name="name"/>
+                <field  name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <!--Form View-->
+    <record id="view_vehicle_feature_form" model="ir.ui.view">
+        <field name="name">vehicle.features.form</field>
+        <field name="model">vehicle.feature</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Features">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Action -->
+    <record id="action_vehicle_feature" model="ir.actions.act_window">
+        <field name="name">Features</field>
+        <field name="res_model">vehicle.feature</field>
+
+        <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            Create your first vehicle
+        </p>
+        <p>
+            Manage vehicle rentals, availability and features.
+        </p>
+    </field>
+    </record>
+</odoo>

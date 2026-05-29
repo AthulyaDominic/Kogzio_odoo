@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--Root Menu -->
+    <menuitem
+        id="vehicle_rental_root_menu"
+        name="Vehicle Rental"
+    />
+
+    <!--Child Menu-->
+    <menuitem
+        id="vehicle_menu"
+        name="Vehicles"
+        parent="vehicle_rental_root_menu"
+        action="action_rental_vehicle"
+    />
+
+    <!--Child Menu-->
+    <menuitem
+        id="vehicle_feature_menu"
+        name="Features"
+        parent="vehicle_rental_root_menu"
+        action="action_vehicle_feature"
+        />
+
+    <!--child menu-->
+    <menuitem
+        id="rental_request_menu"
+        name="Rent Request"
+        parent="vehicle_rental_root_menu"
+        action="action_rental_request"/>
+
+</odoo>

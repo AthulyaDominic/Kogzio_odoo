@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vehicle_rental_search_view" model="ir.ui.view">
+        <field name="name">vehicle.rental.search.view</field>
+        <field name="model">rental.vehicle</field>
+        <field name="arch" type="xml">
+            <search>
+                <!--Searchable Fields-->
+                <field name="vehicle_id"/>
+                <field name="name"/>
+                <field name="brand"/>
+
+                <!--Filters-->
+                <filter name="available" string="Available" domain="[('status','=','available')]"/>
+                <filter name="sold" string="Sold" domain="[('status','=','sold')]"/>
+
+                <!--Group By-->
+
+                <filter name="group_by_brand" string="Brand" context="{'group_by':'brand'}"/>
+                <filter name="group_by_status" string="Status" context="{'group_by':'status'}"/>
+
+            </search>
+        </field>
+    </record>
+</odoo>
