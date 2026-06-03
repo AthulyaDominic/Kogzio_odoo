@@ -35,7 +35,8 @@
                           string="Confirm"
                            type="object"
                            class="btn-primary"
-                           invisible="status != 'draft'"/>
+                           invisible="status != 'draft'"
+                         groups="vehicle_rental.group_vehicle_rental_manager"/>
                          <button name="action_return"
                              string="Return"
                              type="object"
@@ -59,7 +60,8 @@
                     <field name="vehicle_id"/>
                      <field name="rent_date"/>
                     <field name="return_date"/>
-                    <field name="period"/>w
+                    <field name="period"/>
+                     <field name="user_id"/>
                  </group>
 
                  <notebook>

@@ -11,7 +11,15 @@ class RentalRequest(models.Model):
 
     rental_id=fields.Char(string="Rental ID",default="New",readonly=True,copy=False,
                           help="Unique sequence number generated automatically for each rental request.")
+    #who is renting the vehicle
     customer_id=fields.Many2one('res.partner',string="Customer ID",help="Select the customer who is renting the vehicle.",required=True)
+    #who created the request
+    user_id=fields.Many2one(
+    'res.users',
+    string='Created By',
+    default=lambda self: self.env.user,
+    readonly=True
+    )
     request_date=fields.Date(string="Request Date",readonly=True,default=fields.Date.today,
                              help="Date on which the rental request is created.")
     vehicle_id=fields.Many2one('rental.vehicle',string='Vehicle',help="Select the vehicle requested for rental.",
@@ -184,7 +192,6 @@ class RentalRequest(models.Model):
             'view_mode':'form',
             'res_id':self.invoice_id.id
         }
-
 
 
 

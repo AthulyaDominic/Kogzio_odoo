@@ -43,7 +43,7 @@ class VehicleRental(models.Model):
                 ) or 'New'
 
         return super().create(vals_list)
-    #Model year auto calculation from registration dates
+
     @api.depends('registration_date')
     def _compute_model_year(self):
         print(self)

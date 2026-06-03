@@ -1,0 +1,16 @@
+<odoo>
+    <!--user group-->
+    <record id="group_vehicle_rental_user" model="res.groups">
+        <field name="name">Vehicle Rental User</field>
+    </record>
+
+    <!--manager group-->
+    <record id="group_vehicle_rental_manager" model="res.groups">
+        <field name="name">Vehicle Rental Manager</field>
+        <!--manager inherits user permissions-->
+        <field name="implied_ids" eval="[(4,ref('vehicle_rental.group_vehicle_rental_user'))]"/>
+
+
+    </record>
+
+</odoo>

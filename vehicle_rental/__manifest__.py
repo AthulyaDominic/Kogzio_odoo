@@ -8,7 +8,9 @@
     'depends': ['base',    'account',
 ],
     'data': [
+'security/security.xml',
         'security/ir.model.access.csv',
+        'security/record_rules.xml',
         'data/vehicleid_sequence.xml',
         'data/rental_request_sequence.xml',
          'views/search_views.xml',
