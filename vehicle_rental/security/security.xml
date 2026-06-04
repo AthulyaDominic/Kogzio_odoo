@@ -1,16 +1,24 @@
 <odoo>
+    <!--to add permission in the user page of the ui only-->
+    <record id="vehicle_rental_privilege" model="res.groups.privilege">
+      <field name="name">Vehicle Rental</field>
+    </record>
     <!--user group-->
     <record id="group_vehicle_rental_user" model="res.groups">
-        <field name="name">Vehicle Rental User</field>
+       <field name="name">Vehicle Rental User</field>
+       <field name="privilege_id"
+           ref="vehicle_rental.vehicle_rental_privilege"/>
     </record>
 
     <!--manager group-->
     <record id="group_vehicle_rental_manager" model="res.groups">
-        <field name="name">Vehicle Rental Manager</field>
-        <!--manager inherits user permissions-->
-        <field name="implied_ids" eval="[(4,ref('vehicle_rental.group_vehicle_rental_user'))]"/>
+      <field name="name">Vehicle Rental Manager</field>
 
+      <field name="privilege_id"
+           ref="vehicle_rental.vehicle_rental_privilege"/>
 
+       <field name="implied_ids"
+           eval="[(4, ref('vehicle_rental.group_vehicle_rental_user'))]"/>
     </record>
 
 </odoo>
