@@ -20,7 +20,7 @@
         'views/rental_request_views.xml',
 
         'views/vehicle_menu.xml',
-        'report/rental_request_report.xml'
+
         'report/rental_request_report.xml'
     ],
     'installable': True,
