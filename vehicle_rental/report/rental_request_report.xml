@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_rental_request_report" model="ir.actions.report">
+        <field name="name">Rental Request Report</field>
+        <field name="model">rental.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">vehicle_rental.report_rental_request_template</field>
+        <field name="report_file">vehicle_rental.report_rental_request_template</field>
+        <field name="binding_model_id" ref="model_rental_request"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <!--Qweb template creation-->
+    <template id="report_rental_request_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Rental Request Report</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Rental ID</th>
+                                <td>
+                                    <span t-field="doc.rental_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Custome</th>
+                                <td>
+                                    <span t-field="doc.customer_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Vehicle</th>
+                                <td>
+                                    <span t-field="doc.vehicle_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Request Date</th>
+                                <td>
+                                    <span t-field="doc.request_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Rent Date</th>
+                                <td>
+                                    <span t-field="doc.rent_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Return Date</th>
+                                <td>
+                                    <span t-field="doc.return_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    <span t-field="doc.status"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

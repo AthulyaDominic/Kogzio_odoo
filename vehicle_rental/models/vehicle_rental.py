@@ -46,8 +46,7 @@ class VehicleRental(models.Model):
 
     @api.depends('registration_date')
     def _compute_model_year(self):
-        print(self)
-        for record in self:
+       for record in self:
 
             if record.registration_date:
                 record.model_year=str(record.registration_date.year)
