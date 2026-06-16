@@ -1,0 +1,37 @@
+<odoo>
+<!--Rule:1 Display available vehicle for users-->
+    <record id="vehicle_user_rule" model="ir.rule">
+       <field name="name">Available Vehicles For Users</field>
+       <field name="model_id" ref="model_rental_vehicle"/>
+       <field name="groups" eval="[(4,ref('vehicle_rental.group_vehicle_rental_user'))]"/>
+       <field name="domain_force">[('status','=','available')]</field>
+    </record>
+
+    <!--Rule:2 Display only own rent request-->
+    <record id="own_rental_request_rule" model="ir.rule">
+        <field name="name">Own Rental Requests</field>
+         <field name="model_id" ref="model_rental_request"/>
+         <field name="groups"
+           eval="[(4, ref('vehicle_rental.group_vehicle_rental_user'))]"/>
+         <field name="domain_force">
+        [('user_id', '=', user.id)]
+          </field>
+    </record>
+
+    <!--Rule:3 Display all Rental Requests For Managers-->
+    <record id="rental_request_manager_rule" model="ir.rule">
+        <field name="name">All Rental Requests For Managers</field>
+        <field name="model_id" ref="model_rental_request"/>
+        <field name="groups" eval="[(4,ref('vehicle_rental.group_vehicle_rental_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <!--Rule:4 Display all vehicles for managers-->
+   <record id="vehicle_manager_rule" model="ir.rule">
+    <field name="name">All Vehicles For Managers</field>
+    <field name="model_id" ref="model_rental_vehicle"/>
+    <field name="groups"
+           eval="[(4,ref('vehicle_rental.group_vehicle_rental_manager'))]"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+  </record>
+</odoo>
