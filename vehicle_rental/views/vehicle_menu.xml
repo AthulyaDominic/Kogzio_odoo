@@ -28,5 +28,18 @@
         name="Rent Request"
         parent="vehicle_rental_root_menu"
         action="action_rental_request"/>
+    <!--Report-->
+    <menuitem
+      id="menu_rental_reports"
+      name="Reports"
+      parent="vehicle_rental_root_menu"
+      sequence="100"/>
+
+    <menuitem
+      id="menu_rental_request_report"
+      name="Rental Request Report"
+      parent="menu_rental_reports"
+      action="action_rental_report_wizard"
+      sequence="1"/>
 
 </odoo>

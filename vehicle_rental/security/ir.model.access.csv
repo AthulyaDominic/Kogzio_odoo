@@ -8,3 +8,5 @@ access_rental_request_user,rental.request,model_rental_request,vehicle_rental.gr
 access_rental_request_manager,rental.request,model_rental_request,vehicle_rental.group_vehicle_rental_manager,1,1,1,1
 
 access_rental_service_line,rental.service.line,model_rental_service_line,base.group_user,1,1,1,1
+
+access_rental_report_wizard,access_rental_report_wizard,model_rental_report_wizard,base.group_user,1,1,1,1

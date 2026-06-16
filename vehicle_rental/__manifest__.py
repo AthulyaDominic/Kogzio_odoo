@@ -18,10 +18,12 @@
 
         'views/vehicle_feature_views.xml',
         'views/rental_request_views.xml',
+        'wizard/rental_report_wizard_view.xml',
 
         'views/vehicle_menu.xml',
 
         'report/rental_request_report.xml'
+
     ],
     'installable': True,
     'application': True,

@@ -12,60 +12,59 @@
 
 
     <!--Qweb template creation-->
-    <template id="report_rental_request_template">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
+   <template id="report_rental_request_template">
+     <t t-call="web.html_container">
+         <t t-call="web.external_layout">
+             <div class="page">
+                 <h2>Rental Request Report</h2>
+                 <table class="table table-bordered">
+                     <thead>
+                         <tr>
+                             <th>Rental ID</th>
+                             <th>Customer</th>
+                             <th>Request Date</th>
+                             <th>Rent Date</th>
+                             <th>Return Date</th>
+                             <th>Rental Period</th>
+                             <th>Status</th>
+                         </tr>
+                         <tbody>
+                             <t t-foreach="rows" t-as="row">
+                                 <tr>
+                                     <td>
+                                         <t t-esc="row['rental_id']"/>
+                                     </td>
+                                     <td>
+                                         <t t-esc="row['customer_name']"/>
+                                     </td>
+                                     <td>
+                                         <t t-esc="row['request_date']"/>
+                                     </td>
+                                     <td>
+                                         <t t-esc="row['rent_date']"/>
+                                     </td>
+                                     <td>
+                                         <t t-esc="row['return_date']"/>
+                                     </td>
+                                     <td>
+                                         <t t-esc="row['period']"/>
+                                     </td>
+                                     <td>
+                                         <t t-esc="row['status']"/>
+                                     </td>
+                                 </tr>
+                             </t>
+                         </tbody>
 
-                <t t-call="web.external_layout">
-                    <div class="page">
-                        <h2>Rental Request Report</h2>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>Rental ID</th>
-                                <td>
-                                    <span t-field="doc.rental_id"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Custome</th>
-                                <td>
-                                    <span t-field="doc.customer_id"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Vehicle</th>
-                                <td>
-                                    <span t-field="doc.vehicle_id"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Request Date</th>
-                                <td>
-                                    <span t-field="doc.request_date"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Rent Date</th>
-                                <td>
-                                    <span t-field="doc.rent_date"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Return Date</th>
-                                <td>
-                                    <span t-field="doc.return_date"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Status</th>
-                                <td>
-                                    <span t-field="doc.status"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </t>
-            </t>
-        </t>
-    </template>
+                     </thead>
+                 </table>
+             </div>
+         </t>
+
+
+
+
+
+     </t>
+  </template>
 </odoo>
