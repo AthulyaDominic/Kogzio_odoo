@@ -1,5 +1,7 @@
 from odoo import models,fields,api
 from odoo.exceptions import ValidationError
+import io
+import xlsxwriter
 
 
 
@@ -16,13 +18,6 @@ class RentalReportWizard(models.TransientModel):
     @api.constrains('from_date', 'to_date')
     def _check_dates(self):
         for rec in self:
-
-            # One date entered, other missing
-            if (rec.from_date and not rec.to_date) or \
-                    (rec.to_date and not rec.from_date):
-                raise ValidationError(
-                    "Please enter both From Date and To Date."
-                )
 
             # From Date greater than To Date
             if rec.from_date and rec.to_date:
@@ -46,3 +41,28 @@ class RentalReportWizard(models.TransientModel):
         return self.env.ref(
             'vehicle_rental.action_rental_request_report'
         ).report_action([], data=data)
+
+    def action_generate_excel(self):
+
+            output = io.BytesIO()
+
+            workbook = xlsxwriter.Workbook(output)
+            worksheet = workbook.add_worksheet('Rental Report')
+
+            worksheet.write('A1', 'Rental Request Report')
+
+            worksheet.write('A3', 'Rental ID')
+            worksheet.write('B3', 'Customer')
+            worksheet.write('C3', 'Request Date')
+            worksheet.write('D3', 'Rent Date')
+            worksheet.write('E3', 'Return Date')
+            worksheet.write('F3', 'Period')
+            worksheet.write('G3', 'Status')
+
+            workbook.close()
+
+            output.seek(0)
+
+
+            print("Excel Button Clicked")
+            print("Excel Headers Created")

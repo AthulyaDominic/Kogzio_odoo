@@ -9,35 +9,35 @@ class RentalRequestReport(models.AbstractModel):
 
     def _get_report_values(self, docids, data=None):
 
-        vehicle_id=data.get('vehicle_ids')
-        from_date=data.get('from_date')
-        to_date=data.get('to_date')
+        vehicle_id = data.get('vehicle_ids')
+        from_date = data.get('from_date')
+        to_date = data.get('to_date')
 
+        query = """
+            SELECT *,
+                   (SELECT name
+                    FROM res_partner
+                    WHERE id = rental_request.customer_id)
+                   AS customer_name
+            FROM rental_request
+            WHERE 1=1
+        """
 
+        if vehicle_id:
+            query += f" AND vehicle_id = {vehicle_id}"
 
-        #fetch using sql query
+        if from_date:
+            query += f" AND request_date >= '{from_date}'"
 
-        if not from_date and not to_date:
-            self.env.cr.execute("""
-                SELECT *,(SELECT name FROM res_partner WHERE id=rental_request.customer_id) 
-                AS customer_name
-                FROM rental_request
-                WHERE vehicle_id = %s
-            """, [vehicle_id])
-        else:
-            self.env.cr.execute("""
-            SELECT * ,(SELECT name FROM res_partner WHERE id=rental_request.customer_id) 
-            AS customer_name
-            FROM rental_request 
-            WHERE vehicle_id=%s 
-            AND request_date>=%s 
-            AND request_date<=%s""",[vehicle_id,from_date,to_date])
+        if to_date:
+            query += f" AND request_date <= '{to_date}'"
 
-        rows=self.env.cr.dictfetchall()
+        print(query)
 
-        print("Rows",rows)
+        self.env.cr.execute(query)
+        rows = self.env.cr.dictfetchall()
+
         return {
-
             'data': data,
-            'rows':rows
+            'rows': rows,
         }

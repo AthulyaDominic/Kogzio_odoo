@@ -29,6 +29,12 @@
                         class="btn-primary"/>
 
                     <button
+                        name="action_generate_excel"
+                        type="object"
+                        string="Generate Excel"
+                        class="btn-secondary"/>
+
+                    <button
                         string="Cancel"
                         special="cancel"/>
 
