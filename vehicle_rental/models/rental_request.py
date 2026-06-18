@@ -146,12 +146,9 @@ class RentalRequest(models.Model):
                     total_service_charge += service.price
 
             total_amount = amount_paid + total_service_charge
-            product = self.env['product.product'].search(
-                [('name', '=', 'Vehicle Rental')],
-                limit=1
-            )
-            if not product:
-                raise ValidationError("Vehicle Rental product not found.")
+            service_product = self.env.ref('vehicle_rental.product_service_charge', raise_if_not_found=False)
+            if not service_product:
+                raise ValidationError("Default Service Charge product not found. Please update module.")
 
             invoice_vals = {
 
@@ -166,7 +163,7 @@ class RentalRequest(models.Model):
                      'name': f"Vehicle Rental - {record.vehicle_id.name}",
                       'quantity': 1,
                        'price_unit': total_amount,
-                         'product_id': product.id,
+                         'product_id': service_product.id,
                 })]
 
             }
@@ -192,6 +189,36 @@ class RentalRequest(models.Model):
             'view_mode':'form',
             'res_id':self.invoice_id.id
         }
+
+    # Fetching data using sql query function
+    def get_report_data(self, vehicle_id=False, from_date=False, to_date=False):
+
+            query = """
+                        SELECT rr.*,
+                               rp.name AS customer_name,
+                                rv.name AS vehicle_name
+                               FROM rental_request rr
+                                INNER JOIN res_partner rp ON
+                                rr.customer_id = rp.id
+                                 INNER JOIN rental_vehicle rv
+                                 ON rr.vehicle_id = rv.id
+                        WHERE 1=1
+                    """
+
+            if vehicle_id:
+                query += f" AND rr.vehicle_id = {vehicle_id}"
+
+            if from_date:
+                query += f" AND rr.request_date >= '{from_date}'"
+
+            if to_date:
+                query += f" AND rr.request_date <= '{to_date}'"
+
+            print(query)
+
+            self.env.cr.execute(query)
+            return self.env.cr.dictfetchall()
+
 
 
 

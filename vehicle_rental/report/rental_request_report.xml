@@ -16,13 +16,26 @@
      <t t-call="web.html_container">
          <t t-call="web.external_layout">
              <div class="page">
-                 <h2>Rental Request Report</h2>
+                 <div style="margin-bottom:15px;">
+
+
+                    <strong>From Date:</strong>
+                      <t t-esc="data.get('from_date')"/>
+
+                        <br/>
+
+                    <strong>To Date:</strong>
+                      <t t-esc="data.get('to_date')"/>
+                 </div>
+                 <h2 style="text-align:center;">
+                     Rental Request Report
+                 </h2>
                  <table class="table table-bordered">
                      <thead>
                          <tr>
                              <th>Rental ID</th>
                              <th>Customer</th>
-                             <th>Request Date</th>
+                             <th>Vehicle</th>
                              <th>Rent Date</th>
                              <th>Return Date</th>
                              <th>Rental Period</th>
@@ -38,19 +51,19 @@
                                          <t t-esc="row['customer_name']"/>
                                      </td>
                                      <td>
-                                         <t t-esc="row['request_date']"/>
+                                         <t t-esc="row['vehicle_name']"/>
                                      </td>
                                      <td>
-                                         <t t-esc="row['rent_date']"/>
+                                         <t t-esc="row['rent_date'].strftime('%d-%m-%Y')"/>
                                      </td>
                                      <td>
-                                         <t t-esc="row['return_date']"/>
+                                         <t t-esc="row['return_date'].strftime('%d-%m-%Y')"/>
                                      </td>
                                      <td>
                                          <t t-esc="row['period']"/>
                                      </td>
                                      <td>
-                                         <t t-esc="row['status']"/>
+                                         <t t-esc="status_dict.get(row['status'])"/>
                                      </td>
                                  </tr>
                              </t>

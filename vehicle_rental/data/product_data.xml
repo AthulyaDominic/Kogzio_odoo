@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!-- Inside your_module/data/product_data.xml -->
+    <record id="product_service_charge" model="product.product">
+       <field name="name">Service Charge</field>
+       <field name="type">service</field>
+       <field name="list_price">0.00</field> <!-- Kept 0 because we will pass it dynamically -->
+       <field name="categ_id" ref="product.product_category_services"/>
+    </record>
+</odoo>
