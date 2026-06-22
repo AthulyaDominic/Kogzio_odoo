@@ -20,12 +20,12 @@
 
 
                     <strong>From Date:</strong>
-                      <t t-esc="data.get('from_date')"/>
+                      <span t-esc="'-'.join(data['from_date'].split('-')[::-1])"/>
 
                         <br/>
 
                     <strong>To Date:</strong>
-                      <t t-esc="data.get('to_date')"/>
+                       <span t-esc="'-'.join(data['to_date'].split('-')[::-1])"/>
                  </div>
                  <h2 style="text-align:center;">
                      Rental Request Report
@@ -54,10 +54,13 @@
                                          <t t-esc="row['vehicle_name']"/>
                                      </td>
                                      <td>
-                                         <t t-esc="row['rent_date'].strftime('%d-%m-%Y')"/>
+
+                                        <span t-esc="'-'.join(row['rent_date'].split('-')[::-1])"/>
+
                                      </td>
                                      <td>
-                                         <t t-esc="row['return_date'].strftime('%d-%m-%Y')"/>
+                                         <span t-esc="'-'.join(row['return_date'].split('-')[::-1])"/>
+
                                      </td>
                                      <td>
                                          <t t-esc="row['period']"/>

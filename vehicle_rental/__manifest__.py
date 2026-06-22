@@ -5,7 +5,7 @@
     'description': 'Custom module for managing rental vehicles.',
     'author': 'Athulya Dominic',
     'category': 'Services',
-    'depends': ['base',    'account', 'product',
+    'depends': ['base',    'account', 'product','mail'
 ],
     'data': [
 'security/security.xml',

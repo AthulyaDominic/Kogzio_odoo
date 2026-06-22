@@ -8,11 +8,12 @@ class RentalRequest(models.Model):
     _name= 'rental.request'
     _description= 'vehicle rental request'
     _rec_name = 'rental_id'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     rental_id=fields.Char(string="Rental ID",default="New",readonly=True,copy=False,
-                          help="Unique sequence number generated automatically for each rental request.")
+                          help="Unique sequence number generated automatically for each rental request.",tracking=True)
     #who is renting the vehicle
-    customer_id=fields.Many2one('res.partner',string="Customer ID",help="Select the customer who is renting the vehicle.",required=True)
+    customer_id=fields.Many2one('res.partner',string="Customer ID",help="Select the customer who is renting the vehicle.",required=True,tracking=True)
     #who created the request
     user_id=fields.Many2one(
     'res.users',
@@ -21,31 +22,31 @@ class RentalRequest(models.Model):
     readonly=True
     )
     request_date=fields.Date(string="Request Date",readonly=True,default=fields.Date.today,
-                             help="Date on which the rental request is created.")
+                             help="Date on which the rental request is created.",tracking=True)
     vehicle_id=fields.Many2one('rental.vehicle',string='Vehicle',help="Select the vehicle requested for rental.",
-                               domain="[('status','=',   'available')]",required=True)
-    rent_date = fields.Date(string="Rent Date",help="Date on which the vehicle will be rented to the customer.",required=True)
+                               domain="[('status','=',   'available')]",required=True,tracking=True)
+    rent_date = fields.Date(string="Rent Date",help="Date on which the vehicle will be rented to the customer.",required=True,tracking=True)
 
-    return_date = fields.Date( string="Return Date", help="Expected date for returning the rented vehicle.",required=True)
+    return_date = fields.Date( string="Return Date", help="Expected date for returning the rented vehicle.",required=True,tracking=True)
 
     period = fields.Integer(
         string="Rental Period",
         compute="_compute_period",
         store=True,
         readonly=True,
-        help="Automatically calculates total rental duration in days."
+        help="Automatically calculates total rental duration in days.",tracking=True
     )
-    warning = fields.Boolean(string="Warning", compute="_compute_warning")
-    late = fields.Boolean(string="Late", compute="_compute_late")
+    warning = fields.Boolean(string="Warning", compute="_compute_warning",tracking=True)
+    late = fields.Boolean(string="Late", compute="_compute_late",tracking=True)
     service_ids=fields.One2many('rental.service.line','request_id',string="Services",
-    help="List of additional services added to this rental request.")
+    help="List of additional services added to this rental request.",tracking=True)
     status=fields.Selection([
         ('draft', 'Draft'),
         ('confirm', 'Confirm'),
         ('invoiced','Invoiced'),
         ('returned', 'Returned')
     ],string="Status",default="draft",help = "Current status of the rental request.")
-    invoice_id=fields.Many2one(comodel_name='account.move',string="Invoices",copy=False)
+    invoice_id=fields.Many2one(comodel_name='account.move',string="Invoices",copy=False,tracking=True)
 
     @api.model_create_multi
     def create(self,vals_list):
@@ -191,35 +192,6 @@ class RentalRequest(models.Model):
         }
 
     # Fetching data using sql query function
-    def get_report_data(self, vehicle_id=False, from_date=False, to_date=False):
-
-            query = """
-                        SELECT rr.*,
-                               rp.name AS customer_name,
-                                rv.name AS vehicle_name
-                               FROM rental_request rr
-                                INNER JOIN res_partner rp ON
-                                rr.customer_id = rp.id
-                                 INNER JOIN rental_vehicle rv
-                                 ON rr.vehicle_id = rv.id
-                        WHERE 1=1
-                    """
-
-            if vehicle_id:
-                query += f" AND rr.vehicle_id = {vehicle_id}"
-
-            if from_date:
-                query += f" AND rr.request_date >= '{from_date}'"
-
-            if to_date:
-                query += f" AND rr.request_date <= '{to_date}'"
-
-            print(query)
-
-            self.env.cr.execute(query)
-            return self.env.cr.dictfetchall()
-
-
 
 
 

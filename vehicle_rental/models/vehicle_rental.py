@@ -3,21 +3,22 @@ from odoo import models,fields,api
 class VehicleRental(models.Model):
     _name = 'rental.vehicle'
     _description = 'vehicle rental'
+    _inherit=['mail.thread','mail.activity.mixin']
 
 
     vehicle_id=fields.Char(string="Vehicle ID",readonly=True,copy=False,
-                           default="New",help="Unique sequence number generated automatically for each vehicle.")
-    name=fields.Char(string="Vehicle Name",help="Enter the name of the vehicle.",required=True)
-    brand=fields.Char(string="Brand",help="Specify the vehicle brand.",required=True)
-    registration_date=fields.Date(string="Registration Date",help="Date on which the vehicle was registered.",required=True)
+                           default="New",help="Unique sequence number generated automatically for each vehicle.",tracking=True)
+    name=fields.Char(string="Vehicle Name",help="Enter the name of the vehicle.",required=True,tracking=True)
+    brand=fields.Char(string="Brand",help="Specify the vehicle brand.",required=True,tracking=True)
+    registration_date=fields.Date(string="Registration Date",help="Date on which the vehicle was registered.",required=True,tracking=True)
     model_year=fields.Char(
         string="Model Year",
         help="Registered manufacturing year of the vehicle.",
         compute="_compute_model_year",
 
-        readonly=True
+        readonly=True,tracking=True
     )
-    price=fields.Float(string="Daily Rental Rate", help="Daily rental amount for the vehicle.",required=True)
+    price=fields.Float(string="Daily Rental Rate", help="Daily rental amount for the vehicle.",required=True,tracking=True)
     # rental_history=fields.One2many('rental.request','vehicle_id',string="Rental History")
     status=fields.Selection([
         ('available','For Available'),
@@ -25,7 +26,7 @@ class VehicleRental(models.Model):
         ('rented','Rented'),
 
         ('sold', 'Sold')
-    ],string="Status",default='available',help="Current availability status of the vehicle.")
+    ],string="Status",default='available',help="Current availability status of the vehicle.",tracking=True)
     feature_ids = fields.Many2many(
         'vehicle.feature',
         string="Features",
