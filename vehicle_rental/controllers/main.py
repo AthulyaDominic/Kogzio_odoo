@@ -4,6 +4,8 @@ import io
 import xlsxwriter
 from datetime import datetime
 
+from xlwt.ExcelFormulaParser import TRUE_CONST
+
 
 class XLSXReportController(http.Controller):
     @http.route(
@@ -103,3 +105,5 @@ class XLSXReportController(http.Controller):
         )])
         response.stream.write(output.read())
         return response
+
+
