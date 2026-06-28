@@ -19,15 +19,21 @@
 
         'views/vehicle_feature_views.xml',
         'views/rental_request_views.xml',
-        'views/website_templates.xml',
+        'views/website.xml',
         'wizard/rental_report_wizard_view.xml',
 
         'views/vehicle_menu.xml',
+        'views/website_menu.xml',
 
 
         'report/rental_request_report.xml'
 
     ],
+'assets': {
+        'web.assets_frontend': [
+            'vehicle_rental/static/src/js/rental_period.js',
+        ],
+    },
     'installable': True,
     'application': True,
     'license': 'LGPL-3'

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="vehicle_rental_form_template" name="Vehicle Rental Form">
+        <div class="container mt-5">
+            <t t-call="website.layout">
+                <h2>Vehicle Rental Request</h2>
+                <form action="/vehicle/rental/submit" method="post" id="vehicle_rental_form">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="mb-3">
+                        <label>Customer Name</label>
+                        <input type="text"
+                               name="customer_name"
+                               class="form-control"
+                               required="required"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="text"
+                               name="customer_email"
+                               class="form-control"
+                               required="required"/>
+
+                    </div>
+                    <div class="mb-3">
+                        <label>Phone</label>
+                        <input type="text"
+                               name="customer_phone"
+                               class="form-control"
+                               required="required"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Vehicle</label>
+
+                        <select name="vehicle_id" class="form-control">
+                            <t t-foreach="vehicles" t-as="vehicle" t-key="vehicle_id">
+
+                                <option t-att-value="vehicle.id">
+                                    <t t-esc="vehicle.name"/>
+                                </option>
+                            </t>
+
+                        </select>
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label>Request Date</label>
+
+                        <input type="date"
+                               id="request_date"
+                               name="request_date"
+                               t-att-value="today"
+                               readonly="readonly"
+                               class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Rent Date</label>
+
+                        <input type="date"
+                               id="rent_date"
+                               name="rent_date"
+                               class="form-control"
+                               required="required"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Return Date</label>
+
+                        <input type="date"
+                               id="return_date"
+                               name="return_date"
+                               class="form-control"
+                               required="required"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Rental Period (Days)</label>
+
+                        <input type="text"
+                               id="period"
+                               name="period"
+                               class="form-control"
+                               readonly="readonly"/>
+                    </div>
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Submit
+                    </button>
+
+
+                </form>
+            </t>
+        </div>
+    </template>
+    <template id="vehicle_rental_success_template"
+              name="Vehicle Rental Success">
+
+        <t t-call="website.layout">
+
+            <div class="container mt-5">
+
+                <div class="alert alert-success">
+
+                    <h2>
+                        Rental Request Submitted Successfully!
+                    </h2>
+
+                    <p>
+                        Thank you for choosing our vehicle rental service.
+                    </p>
+
+                    <p>
+                        Your rental request has been received successfully.
+                        Our team will contact you shortly.
+                    </p>
+
+                    <a href="/vehicle/rental"
+                       class="btn btn-primary">
+
+                        Submit Another Request
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </t>
+
+    </template>
+</odoo>

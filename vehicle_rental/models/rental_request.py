@@ -14,6 +14,9 @@ class RentalRequest(models.Model):
                           help="Unique sequence number generated automatically for each rental request.",tracking=True)
     #who is renting the vehicle
     customer_id=fields.Many2one('res.partner',string="Customer ID",help="Select the customer who is renting the vehicle.",required=True,tracking=True)
+    customer_name=fields.Char(string="Customer Name",tracking=True)
+    customer_email=fields.Char(string="Email" ,tracking=True)
+    customer_phone=fields.Char(string="Phone",tracking=True)
     #who created the request
     user_id=fields.Many2one(
     'res.users',
