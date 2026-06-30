@@ -81,6 +81,10 @@
                                class="form-control"
                                readonly="readonly"/>
                     </div>
+                    <!-- Bootstrap Alert Container -->
+                    <div id="date_validation_alert">
+
+                    </div>
                     <button type="submit"
                             class="btn btn-primary">
                         Submit

@@ -56,7 +56,8 @@
                  <group>
                    <field name="rental_id"/>
                     <field name="customer_id"/>
-                    <field name="request_date"/>
+
+                     <field name="request_date"/>
                     <field name="vehicle_id"/>
                      <field name="rent_date"/>
                     <field name="return_date"/>
