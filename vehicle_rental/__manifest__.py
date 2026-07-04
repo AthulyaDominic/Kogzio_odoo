@@ -20,6 +20,7 @@
         'views/vehicle_feature_views.xml',
         'views/rental_request_views.xml',
         'views/website.xml',
+        'views/website_snippet_template.xml',
         'wizard/rental_report_wizard_view.xml',
 
         'views/vehicle_menu.xml',

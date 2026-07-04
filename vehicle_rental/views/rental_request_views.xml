@@ -41,9 +41,9 @@
                              string="Return"
                              type="object"
                              class="btn-success"
-                              invisible="status != 'confirm'"/>
+                              invisible="status not in('confirm','invoiced')"/>
                          <field name="status" widget="statusbar"
-                               statusbar_visible="draft,confirm,invoiced,returned" options="{'clickable':1}"/>
+                               statusbar_visible="draft,confirm,invoiced,returned"/>
                 </header>
                <sheet>
                    <div class="oe_button_box" name="button_box">
