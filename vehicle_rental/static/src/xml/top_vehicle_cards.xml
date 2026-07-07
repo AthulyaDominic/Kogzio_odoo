@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--template 2 for build cards-->
+<templates xml:space="preserve">
+
+    <t t-name="vehicle_rental.top_vehicle_cards">
+
+        <t t-foreach="vehicles"
+           t-as="vehicle"
+           t-key="vehicle.id">
+
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="card h-100 shadow-sm">
+
+                    <img
+                            t-att-src="'/web/image/rental.vehicle/%s/image_1920' % vehicle.id"
+                            class="card-img-top"
+                            alt="Vehicle Image"/>
+
+                    <div class="card-body">
+
+                        <h4 class="card-title">
+                            <t t-esc="vehicle.name"/>
+                        </h4>
+
+                        <p class="text-muted">
+                            <t t-esc="vehicle.brand"/>
+                        </p>
+
+                        <h5 class="text-primary">
+                            ₹
+                            <t t-esc="vehicle.price"/>
+                        </h5>
+
+                        <p>
+
+                            ⭐
+                            <t t-esc="vehicle.rental_count"/>
+                            Rentals
+
+                        </p>
+
+                        <span class="badge bg-success">
+
+                            <t t-esc="vehicle.status"/>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </t>
+    </t>
+
+</templates>

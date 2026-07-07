@@ -21,6 +21,7 @@
         'views/rental_request_views.xml',
         'views/website.xml',
         'views/website_snippet_template.xml',
+        'views/website_snippets.xml',
         'wizard/rental_report_wizard_view.xml',
 
         'views/vehicle_menu.xml',
@@ -33,7 +34,12 @@
 'assets': {
         'web.assets_frontend': [
             'vehicle_rental/static/src/js/rental_period.js',
+
         ],
+'web.assets_frontend_lazy': [
+        'vehicle_rental/static/src/js/top_vehicle_snippet.js',
+        'vehicle_rental/static/src/xml/top_vehicle_cards.xml',
+    ],
     },
     'installable': True,
     'application': True,

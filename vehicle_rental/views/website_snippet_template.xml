@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--template1-->
+    <template id="template_top_vehicle"
+              name="Top Rental Vehicles">
+
+        <section class="s_top_rental_vehicle py-5">
+
+            <div class="container">
+
+                <div class="text-center mb-5">
+                    <h2>Top Rental Vehicles</h2>
+                    <p>Our most rented vehicles</p>
+                </div>
+                <div class="dynamic_snippet_template"/>
+            </div>
+        </section>
+    </template>
+</odoo>

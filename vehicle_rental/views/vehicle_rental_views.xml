@@ -54,6 +54,9 @@
                            string="Rental History"/>
 
                   </div>
+                 <field name="image_1920"
+                   widget="image"
+                   class="oe_avatar"/>
                  <group>
                      <field name="vehicle_id"/>
                      <field name="name"/>

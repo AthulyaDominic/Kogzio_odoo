@@ -33,6 +33,11 @@ class VehicleRental(models.Model):
         help="Choose the additional features available in the vehicle such as AC, Bluetooth, GPS, etc."
     )
 
+    #to show the top 3 rented vehicles in the snippet we need ths computed field.
+    rental_count=fields.Integer(string="Rental Count",compute="_compute_rental_count",store=True)
+
+    image_1920=fields.Image(string="Vehicle Image")
+
     @api.model_create_multi
     def create(self, vals_list):
 
@@ -81,3 +86,17 @@ class VehicleRental(models.Model):
         'delete': False,
     }
         }
+
+    # to show the top 3 rented vehicles in the snippet we need ths computed field.
+    @api.depends()
+    def _compute_rental_count(self):
+        for vehicle in self:
+            requests = self.env["rental.request"].search([
+                ("vehicle_id", "=", vehicle.id),
+                ("status", "in", ["confirm", "returned"]),
+            ])
+            vehicle.rental_count = len(requests)
+
+
+
+
