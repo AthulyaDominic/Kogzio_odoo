@@ -38,17 +38,51 @@ prepareContent() {
 }
 start() {
 
-        console.log("start() executed");
+    console.log("------------ START ------------");
 
-        const container = this.el.querySelector(".dynamic_snippet_template");
+    const container = this.el.querySelector(".dynamic_snippet_template");
 
-        console.log("Container:", container);
+    console.log(container);
 
-        container.replaceChildren(this.renderedContent);
-    }
+    console.log("Has row class ?", container.classList.contains("row"));
 
+    container.replaceChildren(this.renderedContent);
+
+
+    console.log("Children inserted");
+
+    container.style.display = "flex";
+    container.style.flexWrap = "wrap";
+    container.style.justifyContent = "space-between";
+
+    container.querySelectorAll(".col-lg-4").forEach((card) => {
+    card.style.flex = "0 0 32%";
+    card.style.maxWidth = "32%";
+});
 
 }
+}
+/* ---------- Public Interaction ---------- */
+
 registry.category("public.interactions").add(
 'vehicle_rental.top_vehicle',TopVehicleSnippet
+);
+
+/* ---------- Edit Mixin ---------- */
+const TopVehicleSnippetEdit = (I) =>
+    class extends I {
+
+        start() {
+            super.start();
+            console.log("Editor mode started");
+        }
+
+    };
+/* ---------- Editor Interaction ---------- */
+registry.category("public.interactions.edit").add(
+    "vehicle_rental.top_vehicle",
+    {
+        Interaction: TopVehicleSnippet,
+        mixin: TopVehicleSnippetEdit,
+    }
 );

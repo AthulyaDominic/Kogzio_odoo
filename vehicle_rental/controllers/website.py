@@ -41,7 +41,27 @@ class VehicleRentalWebsite(http.Controller):
     # website snippet
     @http.route('/top/vehicle',type="json", auth='public', website=True)
     def top_vehicles(self):
-        vehicles = request.env['rental.vehicle'].sudo().search([],order="rental_count desc", limit=3)
+        groups = request.env["rental.request"].sudo().read_group(
+            domain=[],
+            fields=["vehicle_id"],
+            groupby=["vehicle_id"],
+            orderby="__count desc",
+            limit=3,
+        )
+        #extract the vehicle ids
+        vehicle_ids = [
+            group["vehicle_id"][0]
+            for group in groups
+        ]
+
+        #browse those vehicles
+        vehicles = request.env["rental.vehicle"].sudo().browse(vehicle_ids)
+
+        #build the response
+        count_map = {
+            group["vehicle_id"][0]: group["vehicle_id_count"]
+            for group in groups
+        }
         data=[]
         for vehicle in vehicles:
             data.append({
@@ -49,7 +69,8 @@ class VehicleRentalWebsite(http.Controller):
                 "name":vehicle.name,
                 "price":vehicle.price,
                 "status":vehicle.status,
-                "rental_count":vehicle.rental_count,
+                "rental_count":count_map.get(vehicle.id,0),
+                "brand": vehicle.brand,
                 "image":f"/web/image/rental.vehicle/{vehicle.id}/image_1920"
             })
         return data

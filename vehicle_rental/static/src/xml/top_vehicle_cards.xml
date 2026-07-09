@@ -13,10 +13,12 @@
 
                 <div class="card h-100 shadow-sm">
 
-                    <img
-                            t-att-src="'/web/image/rental.vehicle/%s/image_1920' % vehicle.id"
-                            class="card-img-top"
-                            alt="Vehicle Image"/>
+                    <div class="card-img-top overflow-hidden" style="height:250px;">
+                      <img t-att-src="vehicle.image"
+                         class="w-100 h-100"
+                         style="object-fit: cover;"
+                         alt="Vehicle Image"/>
+                    </div>
 
                     <div class="card-body">
 

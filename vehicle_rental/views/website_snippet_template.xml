@@ -12,7 +12,7 @@
                     <h2>Top Rental Vehicles</h2>
                     <p>Our most rented vehicles</p>
                 </div>
-                <div class="dynamic_snippet_template"/>
+                <div class="row dynamic_snippet_template"/>
             </div>
         </section>
     </template>
