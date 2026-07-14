@@ -1,5 +1,9 @@
+import json
+
 from odoo import models,fields,api
 from odoo.exceptions import ValidationError
+
+
 
 
 
@@ -38,9 +42,10 @@ class RentalReportWizard(models.TransientModel):
 
         if to_date:
             query += f" AND rr.request_date <= '{to_date}'"
-
+        print(query)
         self.env.cr.execute(query)
         result= self.env.cr.dictfetchall()
+        print(result)
         return result
 
     @api.constrains('from_date', 'to_date')
@@ -77,13 +82,27 @@ class RentalReportWizard(models.TransientModel):
 
 
     def action_generate_excel(self):
+        result = self.get_report_data(
+            self.vehicle_id.id,
+            self.from_date,
+            self.to_date
+        )
 
+        data = {
+            'result': result,
+            'vehicle_id': self.vehicle_id.id,
+            'from_date': self.from_date,
+            'to_date': self.to_date,
+        }
         return {
-            'type': 'ir.actions.act_url',
-            'url': f'/rental/excel/report?vehicle_id={self.vehicle_id.id}'
-            f'&from_date={self.from_date}'
-            f'&to_date={self.to_date}',
-           'target':'self',
+            'type': 'ir.actions.report',
+            'data':{
+                'model':'rental.request',
+                'options':json.dumps(data,default=str),#here default=str we converting the dates to string format.
+                'output_format':'xlsx',
+                'report_name':'Rental Request Report'
+            },
+            'report_type':'xlsx'
         }
 
 

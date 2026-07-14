@@ -3,28 +3,40 @@ from odoo.http import request
 import io
 import xlsxwriter
 from datetime import datetime
+import json
 
-from xlwt.ExcelFormulaParser import TRUE_CONST
+from odoo.http import content_disposition
 
 
 class XLSXReportController(http.Controller):
     @http.route(
         '/rental/excel/report',
         type='http',
-        auth='user'
+        auth='user',csrf=False, methods=['POST']
+
     )
-    def download_excel(self,**kwargs):
-        # Fetch records
-        vehicle_id=kwargs.get('vehicle_id')
-        from_date=kwargs.get('from_date')
-        to_date=kwargs.get('to_date')
+    def download_excel(self,model,options,output_format,report_name,**kwargs):
+        # Convert JSON string back to Python dictionary
+        options = json.loads(options)
+        print('options:',options)
 
+        # Get the data sent from the wizard
+        rows = options.get('result', [])
+        print('rows:',rows)
 
-        rows= request.env['rental.report.wizard'].get_report_data(
-            vehicle_id,
-            from_date,
-            to_date,
-
+        # Create HTTP response
+        response = request.make_response(
+            None,
+            headers=[
+                (
+                    'Content-Type',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                ),
+                (
+                    'Content-Disposition',
+                    content_disposition(report_name + '.xlsx')
+                ),
+            ]
         )
 
         output = io.BytesIO()
@@ -39,7 +51,7 @@ class XLSXReportController(http.Controller):
         })
         worksheet.merge_range(
             'A1:G1',
-            'Rental Request Report',
+              report_name,
             title_format
         )
         # Border
@@ -66,7 +78,7 @@ class XLSXReportController(http.Controller):
         # Data starts after header row
         row = 3
         status_dict = dict(
-            request.env['rental.request']._fields['status'].selection
+            request.env[model]._fields['status'].selection
         )
 
         for rec in rows:
@@ -94,16 +106,19 @@ class XLSXReportController(http.Controller):
 
             row += 1
 
-        # Close workbook LAST
+
+        # Close workbook
         workbook.close()
 
+        # Move cursor to beginning
         output.seek(0)
-        response=request.make_response(None,headers=[(
-            'Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        ),(
-            'Content-Disposition','attachment;filename=Rental_Report.xlsx'
-        )])
+
+        # Write Excel file into HTTP response
         response.stream.write(output.read())
+
+        # Free memory
+        output.close()
+
         return response
 
 

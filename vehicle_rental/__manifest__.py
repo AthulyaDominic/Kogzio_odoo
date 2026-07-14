@@ -36,6 +36,9 @@
             'vehicle_rental/static/src/js/rental_period.js',
 
         ],
+'web.assets_backend': [
+        'vehicle_rental/static/src/js/action_manager.js',
+    ],
 'web.assets_frontend_lazy': [
         'vehicle_rental/static/src/js/top_vehicle_snippet.js',
         'vehicle_rental/static/src/xml/top_vehicle_cards.xml',

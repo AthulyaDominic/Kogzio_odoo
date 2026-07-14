@@ -44,15 +44,19 @@ class VehicleRentalWebsite(http.Controller):
         groups = request.env["rental.request"].sudo().read_group(
             domain=[],
             fields=["vehicle_id"],
-            groupby=["vehicle_id"],
+            groupby=["vehicle_id" ],
             orderby="__count desc",
-            limit=3,
+            limit=3
+
         )
+
+        print(groups)
         #extract the vehicle ids
         vehicle_ids = [
             group["vehicle_id"][0]
             for group in groups
         ]
+        print(vehicle_ids)
 
         #browse those vehicles
         vehicles = request.env["rental.vehicle"].sudo().browse(vehicle_ids)
