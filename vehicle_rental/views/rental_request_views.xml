@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-  <record id="view_rental_request_list" model="ir.ui.view">
-      <field name="name">rental.request.list</field>
-      <field name="model">rental.request</field>
-      <field name="arch" type="xml">
-          <list sample="1" string="Rental Requests" decoration-warning="warning==True"  decoration-danger="late==True">
-              <field name="rental_id"/>
-              <field name="customer_id"/>
-              <field name="vehicle_id"/>
-              <field name="status" widget="badge"
-                decoration-success="status=='confirm'"
-                     decoration-info="status=='invoiced'"
-                decoration-warning="status=='draft'"
-                     decoration-muted="status=='returned'"/>
+    <record id="view_rental_request_list" model="ir.ui.view">
+        <field name="name">rental.request.list</field>
+        <field name="model">rental.request</field>
+        <field name="arch" type="xml">
+            <list sample="1" string="Rental Requests" decoration-warning="warning==True" decoration-danger="late==True">
+                <field name="rental_id"/>
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="status" widget="badge"
+                       decoration-success="status=='confirm'"
+                       decoration-info="status=='invoiced'"
+                       decoration-warning="status=='draft'"
+                       decoration-muted="status=='returned'"/>
 
-          </list>
-      </field>
-  </record>
+            </list>
+        </field>
+    </record>
 
 
     <!--form view-->
@@ -26,65 +26,83 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                        <button name="action_create_invoice"
-                                string="Create Invoice"
-                                type="object"
-                                class="btn-primary"
-                                invisible="status!='confirm'"/>
-                         <button name="action_confirm"
-                          string="Confirm"
-                           type="object"
-                           class="btn-primary"
-                           invisible="status != 'draft'"
-                         groups="vehicle_rental.group_vehicle_rental_manager"/>
-                         <button name="action_return"
-                             string="Return"
-                             type="object"
-                             class="btn-success"
-                              invisible="status not in('confirm','invoiced')"/>
-                         <field name="status" widget="statusbar"
-                               statusbar_visible="draft,confirm,invoiced,returned"/>
-                </header>
-               <sheet>
-                   <div class="oe_button_box" name="button_box">
-                    <button name="action_view_invoice"
-                       string="Invoice"
+                    <button name="action_create_invoice"
+                            string="Create Invoice"
                             type="object"
-                             class="oe_stat_button"
-                            icon="fa-pencil-square-o"/>
-                   </div>
-                 <group>
-                   <field name="rental_id"/>
-                    <field name="customer_id"/>
+                            class="btn-primary"
+                            invisible="status!='confirm'"/>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn-primary"
+                            invisible="status != 'draft'"
+                            groups="vehicle_rental.group_vehicle_rental_manager"/>
+                    <button name="action_return"
+                            string="Return"
+                            type="object"
+                            class="btn-success"
+                            invisible="status not in('confirm','invoiced')"/>
+                    <field name="status" widget="statusbar"
+                           statusbar_visible="draft,confirm,invoiced,returned"/>
+                </header>
+                <sheet>
+                    <!-- Invoice smart button-->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice"
+                                string="Invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"/>
 
-                     <field name="request_date"/>
-                    <field name="vehicle_id"/>
-                     <field name="rent_date"/>
-                    <field name="return_date"/>
-                    <field name="period"/>
-                     <field name="user_id"/>
-                 </group>
+                    <!--pos order smart button-->
 
-                 <notebook>
+                        <button
+                                name="action_view_pos_orders"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-shopping-cart">
+                            <!-- to show the pos order count insde the smart button-->
+                            <field
+                                    name="pos_order_count"
+                                    widget="statinfo"
+                                    string="POS Orders"/>
 
-                   <page string="Extra Services">
 
-                     <field name="service_ids">
+                        </button>
+                    </div>
 
-                       <list editable="bottom">
+                    <group>
+                        <field name="rental_id"/>
+                        <field name="customer_id"/>
 
-                          <field name="service_name" width="70%"/>
-                          <field name="price" width="30%"/>
+                        <field name="request_date"/>
+                        <field name="vehicle_id"/>
+                        <field name="rent_date"/>
+                        <field name="return_date"/>
+                        <field name="period"/>
+                        <field name="user_id"/>
+                    </group>
 
-                        </list>
+                    <notebook>
 
-                      </field>
+                        <page string="Extra Services">
 
-                   </page>
+                            <field name="service_ids">
 
-                 </notebook>
+                                <list editable="bottom">
 
-               </sheet>
+                                    <field name="service_name" width="70%"/>
+                                    <field name="price" width="30%"/>
+
+                                </list>
+
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
                 <chatter/>
             </form>
         </field>
@@ -98,13 +116,13 @@
 
         <!--when list empty for showing that image-->
         <field name="help" type="html">
-        <p class="o_view_nocontent_smiling_face">
-            Create your first vehicle
-        </p>
-        <p>
-            Manage vehicle rentals, availability and features.
-        </p>
-    </field>
+            <p class="o_view_nocontent_smiling_face">
+                Create your first vehicle
+            </p>
+            <p>
+                Manage vehicle rentals, availability and features.
+            </p>
+        </field>
     </record>
 
 </odoo>

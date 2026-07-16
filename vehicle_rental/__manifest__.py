@@ -5,7 +5,7 @@
     'description': 'Custom module for managing rental vehicles.',
     'author': 'Athulya Dominic',
     'category': 'Services',
-    'depends': ['base',    'account', 'product','mail','website',
+    'depends': ['base',    'account', 'product','mail','website','point_of_sale',
 ],
     'data': [
 'security/security.xml',
@@ -42,6 +42,9 @@
 'web.assets_frontend_lazy': [
         'vehicle_rental/static/src/js/top_vehicle_snippet.js',
         'vehicle_rental/static/src/xml/top_vehicle_cards.xml',
+    ],
+'point_of_sale._assets_pos': [
+        'vehicle_rental/static/src/js/pos_store.js',
     ],
     },
     'installable': True,

@@ -46,6 +46,12 @@ class RentalRequest(models.Model):
         ('invoiced','Invoiced'),
         ('returned', 'Returned')
     ],string="Status",default="draft",help = "Current status of the rental request.")
+
+    #for connecting with pos.
+    pos_order_ids=fields.One2many("pos.order","rental_id",string="POS Order")
+    #to count the pos orders related to the current rent request(to show on the smart button)
+    pos_order_count=fields.Integer(string="Pos Orders",compute="_compute_pos_order_count")
+
     invoice_id=fields.Many2one(comodel_name='account.move',string="Invoices",copy=False,tracking=True)
 
     @api.model_create_multi
@@ -191,7 +197,39 @@ class RentalRequest(models.Model):
             'res_id':self.invoice_id.id
         }
 
-    # Fetching data using sql query function
+    #method to count the number of pos orders to show on the smart button
+    @api.depends("pos_order_ids")
+    def _compute_pos_order_count(self):
+        for record in self:
+            record.pos_order_count=len(record.pos_order_ids)
 
+    #when clicks on the pos orders smart button what shold open
+    def action_view_pos_orders(self):
+        self.ensure_one()
+        return {
+            'type':'ir.actions.act_window',
+            'name':'Pos Orders',
+            'res_model':'pos.order',
+            'view_mode':'list,form',
+            'domain':[('rental_id','=',self.id)],
+            "context": {
+                "default_rental_id": self.id,
+            },
+        }
 
+    # 1. POS Data Loading Methods  ← Add here
+    @api.model
+    def _load_pos_data_fields(self, config):
 
+        return[
+            "id",
+            "rental_id",
+            "customer_id",
+            "status",
+        ]
+    #in pos only loads the rental requests have status except returned.
+    @api.model
+    def _load_pos_data_domain(self, data, config):
+        return [
+            ("status", "!=", "returned"),
+        ]
